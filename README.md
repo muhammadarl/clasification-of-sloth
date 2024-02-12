@@ -1,4 +1,3 @@
-0
 # Laporan Proyek Machine Learning - Muhammad Syiarul Amrullah
 ![Image of Sloth](https://www.travelandleisure.com/thmb/cQ_qSlzajuIUvVE-tckLfWCSBOA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sloth-SLOTH1018-2783079be65d4717b73e17f1db1700db.jpg)
 ## Domain Proyek
@@ -57,8 +56,10 @@ berdasarkan gambar diatas, tidak ditemukan missing value disetiap kolom. selain 
 sloth_invalid_data = (train_df["claw_length_cm"] <= 0) | (train_df["size_cm"] <= 0) | (train_df["tail_length_cm"] <= 0) | (train_df["weight_kg"] <= 0)
 ```
 dengan kondisi filtering diatas, memiliki hasil sebagai berikut:
-![grafik invalid data](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
+![grafik invalid data](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/invalid_data.png?raw=true)
+
 Gambar 1. Invalid data
+
 435 invalid data pada dataset di _drop_, berikut proses dropping invalid data:
 ```
 rows_to_drop = train_df[sloth_invalid_data].index
