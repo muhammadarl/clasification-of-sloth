@@ -1,4 +1,3 @@
-0
 # Laporan Proyek Machine Learning - Muhammad Syiarul Amrullah
 ![Image of Sloth](https://www.travelandleisure.com/thmb/cQ_qSlzajuIUvVE-tckLfWCSBOA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sloth-SLOTH1018-2783079be65d4717b73e17f1db1700db.jpg)
 ## Domain Proyek
@@ -57,52 +56,63 @@ berdasarkan gambar diatas, tidak ditemukan missing value disetiap kolom. selain 
 sloth_invalid_data = (train_df["claw_length_cm"] <= 0) | (train_df["size_cm"] <= 0) | (train_df["tail_length_cm"] <= 0) | (train_df["weight_kg"] <= 0)
 ```
 dengan kondisi filtering diatas, memiliki hasil sebagai berikut:
-![grafik invalid data](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
+![grafik invalid data](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/invalid_data.png?raw=true)
+
 Gambar 1. Invalid data
+
 435 invalid data pada dataset di _drop_, berikut proses dropping invalid data:
 ```
 rows_to_drop = train_df[sloth_invalid_data].index
 train_df.drop(rows_to_drop, inplace=True)
 ```
 ### Check & handle outliers
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
+![percentage of outliers](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/percentage%20of%20outliers.png?raw=true)
+
 Gambar 2. Percentage of outliers
+
 berdasarkan gambar diatas, terdapat outliers di beberapa kolom. 25% size_cm, 0.5 weight_kg & 0.25 claw_length_cm. outliers pada size_cm melebihi 10% sehingga data di drop dengan method IQR. setelah 1072 outliers di drop, berikut hasil setelah penanganan outliers
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 3. Grafik Sex
+
+![after outliers](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/after_outliers.png?raw=true)
+
+Gambar 3. Grafik boxplot after remove outliers
 ### Distribusi variabel
-Distribusi data setiap variable terbagi 2 kelompok, yaitu categorical feature dan numerical feature.
-#### Numerical feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 4. Grafik Sex
-berdasarkan gambar 4, setiap feature terdistribusi normal dengan persebaran data berada disekitar median. jika dilihat dalam bentuk _score skewness_ setiap feature memiliki hasil sebagai berikut:
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 5. Grafik Sex
-#### Categorical Feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 6. Grafik Sex
-berdasarkan gambar 6, setiap feature tidak terdistribusi normal dengan adanya value yang mendominasi dan tidak tersebar data. maka dari itu, semua categorical feature akan di drop
+Distribusi variabel merujuk pada cara nilai-nilai dari suatu variabel terdistribusi atau tersebar dalam sebuah populasi atau sampel. Distribusi ini sering kali digambarkan menggunakan grafik atau fungsi matematika tertentu yang menggambarkan pola sebaran nilai-nilai variabel tersebut. untuk mengetahui persebaran data dari masing-masing feature menggunakan skew(). berikut nilai skew pada masing masing feature:
+![distribusi variabel](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/skewness_feature.png?raw=true)
+
+Gambar 4. Skewness each feature
+berdasarkan gambar 4, setiap feature terdistribusi normal karena nilai skewness tidak melebihi -4 dan 4. maka dari itu, tidak perlu dilakukan preprocessing terhadap persebaran data
+
 ### EDA-Univariate
 Berikut _univariate analysis_ terhadap _categorical feature_ dan _numerical feature_
 #### Categorical Feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 7. Grafik Sex
+![univariate categorical feature](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/uni_categorical_features.png?raw=true)
+
+Gambar 5. Univariate categorical feature
 #### Numerical Feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 8. Grafik Sex
-Berdasarkan gambar 8, persebaran data setiap feature terdistribusi secara normal dengan keberadaan data di sekitar nilai median.
+![grafik sex](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/uni_numerical_features.png?raw=true)
+
+Gambar 6. Grafik Sex
+
+Berdasarkan gambar 6, persebaran data setiap feature terdistribusi secara normal dengan keberadaan data di sekitar nilai median.
 ### EDA-Multivariate
 Berikut merupakan *EDA-Multivariate Analysis*:
+#### Correlation between feature
 #### Categorical Feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 9. Grafik Sex
-Berdasarkan gambar 9, korelasi endangered dengan specie dominan pada satu value yaitu least_concern. korelasi sub specie dengan specie dominan terhadap 2 value yaitu Hoftman two toed dan slothLinnaeus two toed sloth. kedua feature tersebut di drop karena tidak berkorelasi dengan specie.
+![multivariate endangered](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/endangered_specie.png?raw=true)
+![multivariate subspecie](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/sub_specie_specie.png?raw=true)
+Gambar 7. Multivariate Feature
+
+Berdasarkan gambar 7, korelasi endangered dengan specie dominan pada satu value yaitu least_concern. korelasi sub specie dengan specie dominan terhadap 2 value yaitu Hoftman two toed dan slothLinnaeus two toed sloth. kedua feature tersebut di drop karena tidak berkorelasi dengan specie.
 #### Numerical Feature
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 10. Grafik Sex
-Berdasarkan gambar 10, korelasi antara size_cm dan tail length_cm negatif, size_cm dan weight_kg positif, tail_length_cm dan weight_kg memiliki korelasi negatif dan korelasi antara feature yang lain netral, berikut korelasi feature dengan target(specie)
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 11. Grafik Sex
+![Correlation numerical feature](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/corr_matrix.png?raw=true)
+
+Gambar 8. Correlation numerical feature
+
+Berdasarkan gambar 8, korelasi antara size_cm dan tail length_cm negatif, size_cm dan weight_kg positif, tail_length_cm dan weight_kg memiliki korelasi negatif dan korelasi antara feature yang lain netral, berikut korelasi feature dengan target(specie)
+![Correlation numerical feature with target](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/corr_matrix_specie.png?raw=true)
+
+Gambar 9. Correlation numerical feature with target
+
 Hasilnya, size_cm dan weight_kg memiliki korelasi positif dengan specie, dan tail_length_cm memiliki korelasi negatif.
 ## Data Preparation
 Data preparation memiliki tahapan sebagai berikut encoding, Dimension reduction, Scaling, splitting dataset. Berikut penerapan dan hasil dari data preparation:
@@ -206,10 +216,13 @@ TP = Recall
 TN = Precision
 
 Hasilnya, beberapa metriks evaluasi sebagai berikut: 
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 12. Before Hypeparameter tuning
+![evaluation matrix](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/evaluation_metrics.png?raw=true)
 
-![grafik sex](https://user-images.githubusercontent.com/111114060/192172057-b4ef4461-95f2-4cc7-9ba7-103b17bef14f.png)
-Gambar 13. After Hypeparameter tuning
+Gambar 10. Before Hypeparameter tuning
+
+![evaluation matrix after gridsearchcv](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/evaluation_metrics_grid.png?raw=true)
+
+Gambar 11. After Hypeparameter tuning
+
 ## Conclusion
 Penelitian ini telah berhasil menjawab semua permasalahan yang diajukan. Pertama, penelitian ini memberikan solusi tentang cara melakukan pra-pemrosesan pada data sloth yang akan digunakan untuk membuat model yang baik. Tahapan pra-pemrosesan data meliputi: pemeriksaan dan penanganan nilai yang hilang (missing value), deteksi dan penanganan nilai-nilai yang ekstrem (outliers), pemeriksaan dan penanganan distribusi data, transformasi nilai kategorikal menjadi nilai numerik, penggunaan Standard Scaler, dan pembagian dataset menjadi data pelatihan (train) dan data pengujian (test). Kedua, dari berbagai fitur yang tersedia, ditemukan bahwa fitur yang paling berpengaruh terhadap klasifikasi sloth adalah panjang ekor (tail_length_cm) dengan korelasi negatif sebesar -0.86. Selain itu, ukuran (size_cm) dan berat (weight_kg) juga memiliki korelasi positif yang signifikan, sedangkan panjang cakar (claw_length_cm) memiliki korelasi yang lebih normal. Ketiga, penelitian ini menunjukkan bahwa proses pemodelan dilakukan dengan hasil performa yang unggul. Hasil tersebut dicapai melalui dua tahapan utama, yaitu menemukan model optimal menggunakan TPOT dan melakukan penyetelan hyperparameter. Penelitian ini menghasilkan model machine learning dengan menggunakan algoritma KNN yang mencapai akurasi sebesar 95%, presisi 100%, recall 92%, dan F1 Score 96%.
