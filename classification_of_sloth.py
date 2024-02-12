@@ -8,7 +8,7 @@ Original file is located at
 """
 
 !pip install lazypredict
-!pip install lightgbm
+!pip install tpot
 
 import pandas as pd
 import numpy as np
@@ -16,14 +16,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from google.colab import drive
 import warnings
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, RepeatedStratifiedKFold
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import math
 from lazypredict.Supervised import LazyClassifier
-from sklearn.svm import LinearSVC
 from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score, confusion_matrix
+from scipy import stats
+from tpot import TPOTClassifier
+from sklearn.neighbors import KNeighborsClassifier
 # Filter out specific warning by category
 warnings.filterwarnings("ignore")
 # Your code here that triggers the warning
@@ -35,8 +37,11 @@ drive.mount('/content/drive')
 """
 
 train_df = pd.read_csv("/content/drive/MyDrive/portofolio/Classification of sloth/dataset.csv")
-train_df.drop(["Unnamed: 0"], axis=1, inplace=True)
 train_df.head()
+
+"""**Remove Unnamed Column**"""
+
+train_df.drop(["Unnamed: 0"], axis=1, inplace=True)
 
 """## Exploratory Data Analysis
 
@@ -45,41 +50,55 @@ train_df.head()
 
 train_df.info()
 
-"""### Apakah ada data type yang tidak sesuai dengan value?
+"""Data memiliki 6 feature + 1 target dengan 5000 data dan data tidak memiliki missing value"""
 
-hasil dari df.info() menunjukan TYPE, STATE, ADMINISTRATIVE_AREA_LEVEL_2, LOCALITY, SUBLOCALITY merupakan data nominal dan BATH merupakan data diskrit.      
-"""
+numerical_feats = train_df.dtypes[train_df.dtypes != "object"].index
+print("Number of Numerical features: ", len(numerical_feats))
 
-train_df['endangered'].unique()
+categorical_feats = train_df.dtypes[train_df.dtypes == "object"].index
+print("Number of Categorical features: ", len(categorical_feats))
 
-train_df['specie'].unique()
-
-train_df['sub_specie'].unique()
-
-numeric_cols = train_df.select_dtypes(include=['int', 'float']).columns.tolist()
-categorical_cols = train_df.select_dtypes(include=['object']).columns.tolist()
-print(numeric_cols)
-print(categorical_cols)
-
-train_df[categorical_cols] = train_df[categorical_cols].astype('category')
-
-categorical_cols = train_df.select_dtypes(include=['category']).columns.tolist()
-
-train_df.info()
+train_df.describe(include="all")
 
 """### Apakah ada missing value?"""
 
-train_df.isna().sum()
+train_df.isna().sum().plot(kind="bar")
+plt.title("Count of missing value")
+
+"""Check value terhadap claw_length_cm, size_cm, tail_length_cm, weight_kg tidak kurang dari 0"""
+
+sloth_invalid_data = (train_df["claw_length_cm"] <= 0) | (train_df["size_cm"] <= 0) | (train_df["tail_length_cm"] <= 0) | (train_df["weight_kg"] <= 0)
+
+# Count the occurrences of True (invalid data) and False (valid data)
+invalid_counts = sloth_invalid_data.value_counts()
+
+# Plot the counts
+ax = invalid_counts.plot(kind='bar')
+
+# Set the step value for the y-axis ticks
+step = 400  # Set the step value as desired
+ax.set_yticks(range(0, max(invalid_counts) + 1, step))
+# Add annotations as lines like grid for the values
+for index, value in invalid_counts.items():
+    ax.axhline(value, color='gray', linestyle='--', linewidth=0.8)
+    ax.text(index, value + 0.2, str(value), ha='center', va='bottom')
+plt.xlabel('Invalid Data')
+plt.ylabel('Count')
+plt.title('Count of Invalid Sloth Data')
+plt.show()
+
+rows_to_drop = train_df[sloth_invalid_data].index
+train_df.drop(rows_to_drop, inplace=True)
 
 """### Apakah ada outlier value?"""
 
-count_numeric_cols = len(numeric_cols)
+count_numeric_cols = len(numerical_feats)
 num_rows = (count_numeric_cols + 1) // 2  # Calculate the number of rows needed for the grid layout
 
 fig, axes = plt.subplots(num_rows, 2, figsize=(15, 5*num_rows))  # Create a grid layout
 axes = axes.flatten()  # Flatten the 2D array of axes to simplify indexing
 
-for index, col in enumerate(numeric_cols):
+for index, col in enumerate(numerical_feats):
     sns.boxplot(x=train_df[col], ax=axes[index])
     axes[index].set_title(col)
 
@@ -90,20 +109,90 @@ for ax in axes[count_numeric_cols:]:
 plt.tight_layout()
 plt.show()
 
+def calculate_outliers(column):
+  # Calculate the IQR
+  Q1 = column.quantile(0.25)
+  Q3 = column.quantile(0.75)
+  IQR = Q3 - Q1
+
+  # Define lower and upper bounds
+  lower_bound = Q1 - 1.5 * IQR
+  upper_bound = Q3 + 1.5 * IQR
+
+  # Filter the column to count outliers
+  outliers = column[(column < lower_bound) | (column > upper_bound)]
+
+  # Calculate percentage of outliers
+  percentage_outliers = (outliers.shape[0] / column.shape[0]) * 100
+
+  return outliers.shape[0], percentage_outliers
+
+outliers_info = []
+
+for feature in numerical_feats:
+  num_outliers, percentage_outliers = calculate_outliers(train_df[feature])
+
+  if percentage_outliers > 0:
+    outliers_info.append({
+        'feature': feature,
+        'outlier_count': num_outliers,
+        'percentage_outliers': percentage_outliers
+    })
+
+outliers_df = pd.DataFrame(outliers_info).sort_values(by='percentage_outliers', ascending=True)
+outliers_df
+
+ax = outliers_df[["percentage_outliers", "feature"]].set_index("feature").plot(kind="bar", legend=None)
+ax.set_xlabel("Feature")
+ax.set_ylabel("Percentage Outliers")
+ax.set_ylim(0,30)
+ax.set_title("Percentage of Outliers by Feature")
+for index, value in enumerate(outliers_df["percentage_outliers"]):
+    value = round(value, 2)
+    ax.axhline(value, color='gray', linestyle='--', linewidth=0.8)
+    ax.text(index, value + 0.5, f'{value}%', ha='center', va='bottom')
+
+plt.show()
+
+"""Fitur size_cm fitur yang memiliki jumlah outlier terbanyak yaitu diatas 10%."""
+
+def remove_outliers_iqr(dataframe, column_name):
+    # Calculate the IQR
+    Q1 = dataframe[column_name].quantile(0.25)
+    Q3 = dataframe[column_name].quantile(0.75)
+    IQR = Q3 - Q1
+
+    # Define lower and upper bounds
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    # Filter the DataFrame to exclude outliers
+    filtered_dataframe = dataframe[(dataframe[column_name] >= lower_bound) & (dataframe[column_name] <= upper_bound)]
+
+    # Display information about the removed outliers
+    outliers_removed = dataframe.shape[0] - filtered_dataframe.shape[0]
+    print(f"Number of outliers removed in '{column_name}': {outliers_removed}")
+
+    return filtered_dataframe
+
+for feature in ['size_cm']:
+  train_df = remove_outliers_iqr(train_df, feature)
+  train_df.reset_index(drop=True, inplace=True)
+
+count_numeric_cols = len(numerical_feats)
+num_rows = (count_numeric_cols + 1) // 2  # Calculate the number of rows needed for the grid layout
+
 fig, axes = plt.subplots(num_rows, 2, figsize=(15, 5*num_rows))  # Create a grid layout
 axes = axes.flatten()  # Flatten the 2D array of axes to simplify indexing
-for index, col in enumerate(numeric_cols):
-  Q1 = train_df[col].quantile(0.25)
-  Q3 = train_df[col].quantile(0.75)
-  IQR=Q3-Q1
-  train_df[col]=train_df[col][~((train_df[col]<(Q1-2.5*IQR))|(train_df[col]>(Q3+2.5*IQR)))]
-  # Impute missing values with the median
-  sns.boxplot(x=train_df[col], ax=axes[index])
-  axes[index].set_title(col)
-train_df.dropna(axis=1, inplace=True)
+
+for index, col in enumerate(numerical_feats):
+    sns.boxplot(x=train_df[col], ax=axes[index])
+    axes[index].set_title(col)
+
 # Hide any remaining empty subplots
 for ax in axes[count_numeric_cols:]:
     ax.axis('off')
+
 plt.tight_layout()
 plt.show()
 
@@ -111,18 +200,35 @@ plt.show()
 
 train_df.describe(include="all")
 
+feature_skewness = train_df.skew()
+skewed_features_df = pd.DataFrame(feature_skewness, columns=['Skewness']).sort_values('Skewness', ascending=False)
+skewed_features_df
+
+# def barplot comparison
+def barplot_value(x, y, title):
+  chart = sns.barplot(x=x, y=y, ci = None)
+  chart.set_title(title)
+  for p in chart.patches:
+        chart.annotate("%.0f" % p.get_height(), (p.get_x() + p.get_width() / 2., p.get_height()),
+            ha='center', va='center', fontsize=10, color='black', xytext=(0, 5),
+            textcoords='offset points')
+  plt.xticks(rotation=45, ha='right')
+  return chart
+
+barplot_value(skewed_features_df.index, skewed_features_df.Skewness, "Perbandingan Skewness Masing-Masing Feature");
+
 """**Univariate Analysis**
 
 **Categorical Features**
 """
 
-count_categorical_cols = len(categorical_cols)
+count_categorical_cols = len(categorical_feats)
 num_rows = (count_categorical_cols + 1) // 2  # Calculate the number of rows needed for the grid layout
 
 fig, axes = plt.subplots(num_rows, 2, figsize=(15, 5*num_rows))  # Create a grid layout
 axes = axes.flatten()  # Flatten the 2D array of axes to simplify indexing
 
-for index, col in enumerate(categorical_cols):
+for index, col in enumerate(categorical_feats):
     count = train_df[col].value_counts()
     percent = 100 * train_df[col].value_counts(normalize=True).round(2)
     df = pd.DataFrame({'jumlah sampel': count, 'persentase': percent})
@@ -139,67 +245,64 @@ plt.show()
 
 """**Numerical Features**"""
 
+train_df.skew()
+
 train_df.hist(bins=50, figsize=(20,15))
 plt.show()
 
 """**Multivariate Analysis**
 
+**Correlation between feature**
+
 **Categorical Feature**
 """
 
-for col in categorical_cols:
-  if col == "specia":
+for col in categorical_feats:
+  if col == "specie":
     continue
   sns.catplot(x=col, y="specie", kind="bar", dodge=False, height = 4, aspect = 3,  data=train_df, palette="Set3")
   plt.title("Rata-rata 'specie' Relatif terhadap - {}".format(col))
 plt.show()
 
+"""Dari analisis catplot, dapat dilihat bahwa semua fitur kategorikal tidak terdistribusi secara merata. Hal ini ditandai oleh kehadiran nilai yang dominan dan tidak dominan dalam setiap kelas. maka dari itu, feature diatas akan di drop"""
+
+train_df.drop(["sub_specie", "endangered"], axis=1, inplace=True)
+
 # Mengamati hubungan antar fitur numerik dengan fungsi pairplot()
 sns.pairplot(train_df, diag_kind = 'kde')
 
-plt.figure(figsize=(10, 8))
-correlation_matrix = train_df.corr(method='spearman').round(2)
+# Hitung koefisien korelasi
+corr_matrix = train_df.corr()
 
-# Untuk menge-print nilai di dalam kotak, gunakan parameter anot=True
-sns.heatmap(data=correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5, )
-plt.title("Correlation Matrix untuk Fitur Numerik ", size=20)
+# Plot correlation matrix sebagai heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
+plt.title('Correlation Matrix')
+plt.show()
 
 """## Data Preparation
 
-### Encoding Fitur Kategori
+### Encoding
+
+**Encoding categorical value into numerical**
 """
 
-train_df.drop(["endangered", "sub_specie"], axis=1, inplace=True)
+categorical_cols = train_df.select_dtypes(include=['object']).columns.tolist()
+train_df[categorical_cols] = train_df[categorical_cols].astype('category')
 
-categorical_cols = train_df.select_dtypes(include=['category']).columns.tolist()
-categorical_column = []
-for i in categorical_cols:
-  if i == "specie":
-    continue
-  train_df = pd.concat([train_df, pd.get_dummies(train_df[i], prefix=i)],axis=1)
-  categorical_column.append(i)
-train_df.drop(categorical_column, axis=1, inplace=True)
-train_df.head()
+encoder = LabelEncoder()
+train_df["specie"] = encoder.fit_transform(train_df["specie"])
 
-enc = LabelEncoder()
-train_df["specie"] = enc.fit_transform(train_df[["specie"]])
+encoder.classes_
 
-enc.classes_
+# Hitung koefisien korelasi
+corr_matrix = train_df.corr()
 
-"""### PCA"""
-
-train_df.head()
-
-pca = PCA(n_components=3, random_state=123)
-pca.fit(train_df[["claw_length_cm", "tail_length_cm", "weight_kg"]])
-princ_comp = pca.transform(train_df[["claw_length_cm", "tail_length_cm", "weight_kg"]])
-
-pca.explained_variance_ratio_.round(3)
-
-pca = PCA(n_components=1, random_state=123)
-pca.fit(train_df[["claw_length_cm", "tail_length_cm", "weight_kg"]])
-train_df['body'] = pca.transform(train_df.loc[:, ("claw_length_cm", "tail_length_cm", "weight_kg")]).flatten()
-train_df.drop(["claw_length_cm", "tail_length_cm", "weight_kg"], axis=1, inplace=True)
+# Plot correlation matrix sebagai heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
+plt.title('Correlation Matrix')
+plt.show()
 
 """### Standarisasi"""
 
@@ -207,65 +310,109 @@ X = train_df.drop(["specie"],axis=1)
 y = train_df["specie"]
 
 scaler = StandardScaler()
-numeric_cols = ["body"]
-scaler.fit(X[numeric_cols])
-X[numeric_cols] = scaler.transform(X.loc[:, numeric_cols])
-X[numeric_cols].head()
+scaler.fit(X[numerical_feats])
+X[numerical_feats] = scaler.transform(X.loc[:, numerical_feats])
+X[numerical_feats].head()
 
 """### Train-Test-Split"""
 
 X.head()
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 30, random_state = 123)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 20, random_state = 1)
 
 """## Model Development
 
-### Model Development dengan lazy regressor
+### Find Optimal Model Using TPOT
 """
 
-clf = LazyClassifier(verbose=0,ignore_warnings=True, custom_metric=None)
-models,predictions = clf.fit(X_train, X_test, y_train, y_test)
-# Get the best model based on Accuracy
-best_model = models.loc[models['Accuracy'].idxmax()]
-print("Best model based on Accuracy:")
-print(best_model)
+# # define model evaluation
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# define search
+model = TPOTClassifier(generations=5, population_size=50, cv=cv, scoring='accuracy', verbosity=2, random_state=1, n_jobs=-1)
+# perform the search
+model.fit(X_train, y_train)
+# export the best model
+model.export('tpot_sonar_best_model.py')
 
-models
+model = KNeighborsClassifier(n_neighbors=22, p=1, weights="uniform")
+model.fit(X_train, y_train)
+test_accuracy = model.score(X_test, y_test)
+predict_1 = model.predict(X_test)
+print("Test set accuracy:", test_accuracy)
 
-param_grid = {
-    'C': [0.1, 1, 10, 100],
-    'max_iter': [1000, 2000, 3000],
-}
+"""### Hyperparameter Tuning & Training Model"""
 
-grid_search = GridSearchCV(LinearSVC(), param_grid, cv=5, scoring='accuracy')
-grid_search.fit(X_train, y_train)
-print("Best hyperparameters:", grid_search.best_params_)
-best_model = grid_search.best_estimator_
-y_pred = best_model.predict(X_test)
+#List Hyperparameters that we want to tune.
+leaf_size = list(range(1,50))
+n_neighbors = list(range(1,30))
+p=[1,2]
+#Convert to dictionary
+grid_params = {
+               'weights' : ['uniform','distance'],
+               'metric' : ['minkowski','euclidean','manhattan'],
+                'leaf_size':leaf_size,
+               'p':p
+               }
+#Create new KNN object
+knn_2 = KNeighborsClassifier()
+#Use GridSearch
+clf = GridSearchCV(knn_2, grid_params, cv=cv, verbose=2)
+#Fit the model
+best_model = clf.fit(X_train,y_train)
+#Print The value of best Hyperparameters
+print('Best leaf_size:', best_model.best_estimator_.get_params()['leaf_size'])
+print('Best p:', best_model.best_estimator_.get_params()['p'])
+print('Best n_neighbors:', best_model.best_estimator_.get_params()['n_neighbors'])
+
+best_model.best_estimator_.get_params()
+
+best_model = best_model.best_estimator_
+test_accuracy = best_model.score(X_test, y_test)
+predict_2 = best_model.predict(X_test)
+print("Test set accuracy:", test_accuracy)
 
 """## Evaluation Model"""
 
-precision = precision_score(y_test, y_pred)
-recall = recall_score(y_test, y_pred)
-accuracy = accuracy_score(y_test, y_pred)
-f1 = f1_score(y_test, y_pred)
-conf_matrix = confusion_matrix(y_test, y_pred)
+accuracy_tpot = accuracy_score(y_test, predict_1)
+precision_tpot = precision_score(y_test, predict_1)
+recall_tpot = recall_score(y_test, predict_1)
+f1_tpot = f1_score(y_test, predict_1)
 
-evaluation = {
-    "accuracy":[accuracy],
-    "precision":[precision],
-    "recall":[recall],
-    "f1 score":[f1]
+accuracy_tuning = accuracy_score(y_test, predict_2)
+precision_tuning = precision_score(y_test, predict_2)
+recall_tuning = recall_score(y_test, predict_2)
+f1_tuning = f1_score(y_test, predict_2)
+
+data = {
+    'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score'],
+    'Score': [accuracy_tpot, precision_tpot, recall_tpot, f1_tpot]
 }
-evaluation_df = pd.DataFrame(evaluation)
-evaluation_df
+df = pd.DataFrame(data)
+# Create a custom color palette
+colors = ['skyblue', 'salmon', 'lightgreen', 'lightcoral']
+# Create a bar plot using Seaborn with a custom color palette
+plt.figure(figsize=(10, 6))
+ax = sns.barplot(x='Metric', y='Score', data=df, palette=colors)
+plt.title('Evaluation Metrics Model from TPOT Classifier')
+plt.ylim(0, 1)  # Set y-axis limits between 0 and 1 for accuracy, precision, recall, and F1 score
+# Add annotations with the scores inside each bar
+for index, value in enumerate(df['Score']):
+    ax.text(index, value/2, f'{value:.2f}', ha='center', va='center', color='white', fontsize=12)
+plt.show()
 
-conf_matrix = confusion_matrix(y_test, y_pred)
-
-# Plot confusion matrix
-plt.figure(figsize=(8, 6))
-sns.heatmap(conf_matrix, annot=True, cmap="Blues", fmt="d", cbar=False)
-plt.xlabel('Predicted labels')
-plt.ylabel('True labels')
-plt.title('Confusion Matrix')
+data = {
+    'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score'],
+    'Score': [accuracy_tuning, precision_tuning, recall_tuning, f1_tuning]
+}
+df = pd.DataFrame(data)
+# Create a custom color palette
+colors = ['skyblue', 'salmon', 'lightgreen', 'lightcoral']
+# Create a bar plot using Seaborn with a custom color palette
+plt.figure(figsize=(10, 6))
+ax = sns.barplot(x='Metric', y='Score', data=df, palette=colors)
+plt.title('Evaluation Metrics Model After GridSearchCV')
+plt.ylim(0, 1)  # Set y-axis limits between 0 and 1 for accuracy, precision, recall, and F1 score
+# Add annotations with the scores inside each bar
+for index, value in enumerate(df['Score']):
+    ax.text(index, value/2, f'{value:.2f}', ha='center', va='center', color='white', fontsize=12)
 plt.show()
