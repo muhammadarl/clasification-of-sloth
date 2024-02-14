@@ -398,6 +398,10 @@ plt.ylim(0, 1)  # Set y-axis limits between 0 and 1 for accuracy, precision, rec
 # Add annotations with the scores inside each bar
 for index, value in enumerate(df['Score']):
     ax.text(index, value/2, f'{value:.2f}', ha='center', va='center', color='white', fontsize=12)
+legend_labels = ['Accuracy', 'Precision', 'Recall','F1 Score']
+legend_patches = [plt.Line2D([0], [0], color='w', marker='s', markersize=10, markerfacecolor=color, label=label)
+                   for color, label in zip(colors, legend_labels)]
+plt.legend(handles=legend_patches, loc='lower right')
 plt.show()
 
 data = {
@@ -415,4 +419,8 @@ plt.ylim(0, 1)  # Set y-axis limits between 0 and 1 for accuracy, precision, rec
 # Add annotations with the scores inside each bar
 for index, value in enumerate(df['Score']):
     ax.text(index, value/2, f'{value:.2f}', ha='center', va='center', color='white', fontsize=12)
+legend_labels = ['Accuracy', 'Precision', 'Recall','F1 Score']
+legend_patches = [plt.Line2D([0], [0], color='w', marker='s', markersize=10, markerfacecolor=color, label=label)
+                   for color, label in zip(colors, legend_labels)]
+plt.legend(handles=legend_patches, loc='lower right')
 plt.show()
