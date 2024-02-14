@@ -1,15 +1,22 @@
 # Laporan Proyek Machine Learning - Muhammad Syiarul Amrullah
+Domain yang dipilih untuk proyek machine learning ini adalah Konservasi, dengan judul Predictive Analytics : Klasifikasi Jenis Sloth Menggunakan Machine Learning
 ![Image of Sloth](https://www.travelandleisure.com/thmb/cQ_qSlzajuIUvVE-tckLfWCSBOA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sloth-SLOTH1018-2783079be65d4717b73e17f1db1700db.jpg)
 ## Domain Proyek
 
-Sloth merupakan mamalia arboreal yang dikenal dengan gerakan lambatnya dan gaya hidupnya yang santai. Terdapat dua famili yang terdiri dari enam spesies sloth: Megalonychidae (two-toed sloth) dan Bradypodidae (three-toed sloth). Meskipun sloth memiliki penampilan yang unik dan ciri-ciri khas, namun klasifikasi spesies sloth masih menjadi tantangan karena beberapa faktor, seperti perubahan warna bulu yang dapat membingungkan dalam identifikasi spesies, serta adanya variasi dalam ukuran tubuh dan morfologi antar spesies. terdapat kasus klasifikasi lain seperti [Poverty Classification Using Machine Learning: The Case of Jordan](https://www.semanticscholar.org/paper/Poverty-Classification-Using-Machine-Learning%3A-The-Alsharkawi-Al-Fetyani/7ceaa167d3a41af5477961bb042a246aaceb4b17). penelitian tersebut ditujukan dalam menyelesaikan permasalahan terhadap penilaian dan monitoring kemiskinan di yordania. Maka dari itu klasifikasi spesies sloth dilakukan menggunakan machine learning.
+Sloth merupakan mamalia arboreal yang dikenal dengan gerakan lambatnya dan gaya hidupnya yang santai. Terdapat dua famili yang terdiri dari enam spesies sloth: Megalonychidae (two-toed sloth) dan Bradypodidae (three-toed sloth). Meskipun sloth memiliki penampilan yang unik dan ciri-ciri khas, namun klasifikasi spesies sloth masih menjadi tantangan karena beberapa faktor, seperti perubahan warna bulu yang dapat membingungkan dalam identifikasi spesies, serta adanya variasi dalam ukuran tubuh dan morfologi antar spesies. Memahami jenis-jenis sloth dapat membantu dalam upaya konservasi untuk melindungi spesies-spesies yang terancam punah dan memastikan keberlanjutan populasi mereka. terdapat kasus klasifikasi lain seperti [[1]](https://www.semanticscholar.org/paper/Poverty-Classification-Using-Machine-Learning%3A-The-Alsharkawi-Al-Fetyani/7ceaa167d3a41af5477961bb042a246aaceb4b17). penelitian tersebut ditujukan dalam menyelesaikan permasalahan terhadap penilaian dan monitoring kemiskinan di yordania. Maka dari itu klasifikasi sloth ditjujukan untuk menyelesaikan permasalahan dan membantu proses konservasi.
 
-Penelitian klasifikasi sloth memiliki tujuan untuk mengembangkan metode atau algoritma yang dapat mengidentifikasi dan mengklasifikasikan spesies sloth secara akurat berdasarkan karakteristik morfologi atau genetik. Hal ini penting untuk memahami keragaman genetik dan ekologi sloth serta melindungi keberlanjutan populasi mereka. penelitian ini diharapkan dapat memberikan kontribusi dalam pemahaman lebih lanjut tentang sloth dan upaya konservasi mereka.
+Tujuan untuk mengembangkan metode atau algoritma yang dapat mengidentifikasi dan mengklasifikasikan spesies sloth secara akurat berdasarkan karakteristik morfologi atau genetik. Hal ini penting untuk memahami keragaman genetik dan ekologi sloth serta melindungi keberlanjutan populasi. penelitian ini diharapkan dapat memberikan kontribusi dalam pemahaman lebih lanjut tentang sloth dan upaya konservasi mereka.
 
 ## Business Understanding
-Masalah klasifikasi sloth memiliki dampak penting dalam bidang konservasi dan penelitian ekologi. Dengan memahami lebih baik tentang spesies sloth, kita dapat mengidentifikasi area-area penting untuk pelestarian habitatnya, mengembangkan strategi konservasi yang lebih efektif, dan memastikan kelangsungan hidup populasi sloth di alam liar. Selain itu, pengetahuan yang lebih mendalam tentang sloth juga dapat memberikan wawasan yang berharga dalam bidang biologi evolusi dan kajian ekologi hewan arboreal lainnya.
+Masalah klasifikasi sloth memiliki dampak penting dalam bidang konservasi dan penelitian ekologi. Terdapat beberapa masalah yaitu, pemantauan populasi yang kurang efektif, kurangnya pemahaman sehingga kesadaran masyarakat rendah terhadap perlindungan sloth. penelitian ini bertujuan membantu untuk memahami lebih baik tentang spesies sloth. Pemahaman sloth yang baik dapat membantu identifikasi area-area penting untuk pelestarian habitatnya, mengembangkan strategi konservasi yang lebih efektif, dan memastikan kelangsungan hidup populasi sloth di alam liar. Selain itu, pengetahuan yang lebih mendalam tentang sloth juga dapat memberikan wawasan yang berharga dalam bidang biologi evolusi dan kajian ekologi hewan arboreal lainnya.
 
-Dari segi ekonomi, penelitian ini juga dapat memberikan manfaat dalam pengembangan pariwisata berkelanjutan. Sloth sering menjadi daya tarik wisatawan karena keunikan dan keanggunannya, sehingga pemahaman yang lebih baik tentang sloth dapat membantu dalam pengembangan program pariwisata yang bertanggung jawab dan berkelanjutan untuk mendukung ekonomi lokal di daerah-daerah di mana sloth hidup.
+Dari segi ekonomi, Pemahaman yang lebih baik tentang sloth dapat memberikan dampak positif yang signifikan pada pengembangan program pariwisata yang berkelanjutan. Salah satu aspek utamanya adalah daya tarik wisatawan yang lebih besar. Sloth merupakan hewan yang unik dan menarik bagi banyak orang, sehingga pemahaman yang lebih mendalam tentang sloth dapat menghasilkan program pariwisata yang lebih menarik dan edukatif. Program ini dapat menarik lebih banyak wisatawan untuk mengunjungi daerah tersebut, yang pada gilirannya dapat meningkatkan pendapatan pariwisata dan ekonomi lokal.
+
+Selain itu, pemahaman yang lebih baik tentang sloth juga dapat membantu dalam melindungi habitatnya. Dengan memahami habitat dan perilaku sloth, program pariwisata dapat merancang jalur wisata yang sesuai dan meminimalkan dampak negatif terhadap lingkungan. Program pariwisata yang bertanggung jawab terhadap lingkungan akan membantu dalam menjaga keberlanjutan lingkungan dan habitat sloth.
+
+Pengembangan program pariwisata yang berkelanjutan juga dapat memberikan manfaat dalam hal pendidikan dan kesadaran lingkungan. Melalui program ini, wisatawan dapat diberi informasi tentang pentingnya melindungi sloth dan habitatnya. Hal ini dapat meningkatkan kesadaran masyarakat tentang konservasi lingkungan dan membantu dalam melibatkan masyarakat lokal dalam upaya pelestarian sloth.
+
+Selain itu, program pariwisata yang berkelanjutan juga dapat menjadi sumber pendapatan ekonomi tambahan bagi masyarakat lokal. Dengan meningkatkan kunjungan wisatawan, program pariwisata dapat meningkatkan kesejahteraan masyarakat setempat dan mengurangi tekanan terhadap sumber daya alam. Dengan demikian, pemahaman yang lebih baik tentang sloth dapat berkontribusi pada pengembangan program pariwisata yang bertanggung jawab, berkelanjutan, dan bermanfaat bagi masyarakat lokal dan lingkungan.
 
 Secara keseluruhan, penelitian klasifikasi sloth memiliki implikasi yang luas dalam bidang konservasi, penelitian ekologi, dan pengembangan pariwisata, yang semuanya memiliki dampak positif baik secara ekologis maupun ekonomis.
 
@@ -17,26 +24,26 @@ Secara keseluruhan, penelitian klasifikasi sloth memiliki implikasi yang luas da
 Berdasarkan latar belakang dari penelitian ini, rumusan masalah pada penelitian ini sebagai berikut:
 - Bagaimana melakukan pra-pemrosesan pada data sloth yang akan digunakan untuk membuat model yang baik? 
 - Dari serangkaian fitur yang ada, fitur apa yang paling berpengaruh terhadap klasifikasi sloth?
-- Bagaimana modelling dengan hasil performa unggul?
+- Bagaimana modelling dilakukan sehingga dapat meningkatkan pemahaman masyarakat dan membantu monitoring terhadap slot?
 
 ### Goals
 
 Berdasarkan rumusan masalah dari penelitian ini, tujuan pada penelitian ini sebagai berikut:
 - Mengetahui tahapan pra pemrosesan data yang tepat dalam klasifikasi sloth
 - Mengetahui fitur yang paling berkorelasi dengan klasifikasi sloth
-- Membuat model machine learning yang dapat klasifikasi sloth dengan tingkat akurasi yang tinggi
+- Membuat model machine learning yang dapat klasifikasi sloth dengan tingkat akurasi yang tinggi diatas 90%
 
  ### Solution statements
  Solusi yang dapat dilakukan untuk memenuhi tujuan dari proyek ini diantaranya :
  - Untuk data understanding dan data preparation dapat dilakukan beberapa teknik, diantaranya :
-    * Melakukan check dan penanganan missing value
-    * Melakukan check outliers value dan melakukan penanganan outliers
-    * Melakukan check & handle distribution data
-    * Encoding _Categorical value into numerical value_
-    * Melakukan _Standard Scaler_.
-    * Melakukan pembagian dataset menjadi dua bagian dengan rasio 70% untuk data latih dan 30% untuk data uji.
-* TPOT Classifier digunakan untuk mendapatkan algoritma dengan tingkat akurasi tinggi
-* Hyperparameter Tuning dilakukan untuk mendapatkan parameter terbaik dari TPOT Classifier sehingga mendapatkan hasil terbaik
+    * Check dan Penanganan Missing Value: Melakukan pemeriksaan terhadap data untuk mengetahui apakah terdapat nilai yang hilang (missing value), dan jika ada, melakukan penanganan seperti mengisi nilai yang hilang atau menghapus baris/data yang memiliki nilai yang hilang tersebut.
+    * Memeriksa apakah terdapat nilai ekstrem (outliers) dalam data, dan jika ditemukan, melakukan penanganan seperti menghapus outliers atau mengubah nilainya agar sesuai dengan distribusi data.
+    * Memeriksa distribusi data untuk setiap fitur/variabel dalam dataset, dan jika diperlukan, melakukan transformasi data agar distribusinya lebih sesuai dengan asumsi model yang digunakan.
+    * Mengubah nilai kategori (categorical value) menjadi nilai numerik agar dapat digunakan dalam analisis atau pemodelan.
+    * Menstandarisasi skala variabel numerik agar memiliki skala yang seragam, sehingga mencegah variabel dengan skala besar mendominasi pengaruh pada model.
+    * Memisahkan dataset menjadi dua bagian dengan rasio 80% untuk data latih (training data) dan 20% untuk data uji (testing data). Hal ini dilakukan untuk melatih model pada data latih dan menguji performa model pada data uji yang tidak digunakan dalam proses pelatihan.
+* Menggunakan TPOT Classifier untuk mendapatkan algoritma machine learning dengan tingkat akurasi yang tinggi secara otomatis. TPOT Classifier akan melakukan pencarian dan evaluasi berbagai kombinasi algoritma serta hyperparameter untuk menemukan model terbaik untuk dataset yang diberikan.
+* Melakukan tuning (penyetelan) hyperparameter dari model yang dihasilkan oleh TPOT Classifier untuk mendapatkan parameter terbaik yang menghasilkan performa model yang optimal.
 
 ## Data Understanding
 Dataset yang digunakan untuk proyek ini diperoleh dari situs kaggle yang dapat diunduh melalui [Kaggle](https://www.kaggle.com/datasets/bertiemackie/sloth-species). 
@@ -51,26 +58,18 @@ Adapun penjelasan detail dari sampel data sebagai berikut:
 - sub_specie: _The sub specie of sloth._
 Pada data understanding, terdapat beberapa tahap dalam memahami data seperti _check & handle Missing Value_, _check & handle outliers_, _check & handle distribution data_.
 ### check & handle Missing Value
-berdasarkan gambar diatas, tidak ditemukan missing value disetiap kolom. selain pengecekan dengan missing value, perlu dilakukan pengecekan terhadap invalid data, penelitian ini menggunakan kondisional sebagai berikut
-```
-sloth_invalid_data = (train_df["claw_length_cm"] <= 0) | (train_df["size_cm"] <= 0) | (train_df["tail_length_cm"] <= 0) | (train_df["weight_kg"] <= 0)
-```
-dengan kondisi filtering diatas, memiliki hasil sebagai berikut:
+berdasarkan gambar diatas, tidak ditemukan missing value disetiap kolom. selain pengecekan dengan missing value, perlu dilakukan pengecekan terhadap invalid data, penelitian ini menggunakan kondisional jika claw_length_cm/size_cm/tail_length_cm kurang dari 0 untuk menemukan invalid data, karena tidak ada sloth yang memiliki nilai tersebut kurang dari 0. hasilnya sebagai berikut:
 ![grafik invalid data](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/invalid_data.png?raw=true)
 
 Gambar 1. Invalid data
 
-435 invalid data pada dataset di _drop_, berikut proses dropping invalid data:
-```
-rows_to_drop = train_df[sloth_invalid_data].index
-train_df.drop(rows_to_drop, inplace=True)
-```
+435 invalid data pada dataset di _drop_, Invalid data perlu dihapus karena dapat mengganggu analisis dan pemodelan data yang akurat. Data yang tidak valid, seperti nilai yang hilang atau format yang salah, dapat menyebabkan kesalahan dalam perhitungan statistik dan menghasilkan hasil yang tidak dapat diandalkan. Dengan menghapus data yang tidak valid membuat data yang bersih dan representatif, sehingga hasilnya lebih akurat dan dapat dipercaya.
 ### Check & handle outliers
 ![percentage of outliers](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/percentage%20of%20outliers.png?raw=true)
 
 Gambar 2. Percentage of outliers
 
-berdasarkan gambar diatas, terdapat outliers di beberapa kolom. 25% size_cm, 0.5 weight_kg & 0.25 claw_length_cm. outliers pada size_cm melebihi 10% sehingga data di drop dengan method IQR. setelah 1072 outliers di drop, berikut hasil setelah penanganan outliers
+berdasarkan gambar diatas, terdapat outliers di beberapa kolom. 25% size_cm, 0.5 weight_kg & 0.25 claw_length_cm. outliers pada size_cm melebihi 10% sehingga data di drop dengan method IQR, dikarenakan outliers yang signifikan seperti ini dapat memiliki dampak yang tidak proporsional terhadap analisis statistik dan pemodelan. Dengan menghapus outliers ini, distribusi data dapat menjadi lebih representatif dan hasil analisis serta model yang dihasilkan akan lebih akurat dan dapat diandalkan. setelah 1072 outliers di drop, berikut hasil setelah penanganan outliers
 
 ![after outliers](https://github.com/muhammadarl/clasification-of-sloth/blob/main/src/img/after_outliers.png?raw=true)
 
@@ -117,57 +116,31 @@ Hasilnya, size_cm dan weight_kg memiliki korelasi positif dengan specie, dan tai
 ## Data Preparation
 Data preparation memiliki tahapan sebagai berikut encoding, Dimension reduction, Scaling, splitting dataset. Berikut penerapan dan hasil dari data preparation:
 1. Encoding
-Pada tahap ini, encoding dilakukan untuk 1 feature yaitu specie. penerapan encoding menggunakan label encoder karena feature ini merupakan variabel target. Hasilnya, Three toed menjadi 0 dan two toed menjadi 1. Encoding dilakukan untuk menghindari bias dan peningkatan kinerja. berikut bagaimana cara melakukan encoding.
-    ```
-    encoder = LabelEncoder()
-    train_df["specie"] = encoder.fit_transform(train_df["specie"])
-    ```
+Pada tahap ini, encoding dilakukan untuk 1 feature yaitu specie. penerapan encoding menggunakan label encoder karena feature ini merupakan variabel target. Hasilnya, Three toed menjadi 0 dan two toed menjadi 1. Encoding dipilih dalam analisis data untuk mengubah variabel kategori menjadi bentuk numerik yang dapat diproses oleh algoritma machine learning. Penggunaan teknik encoding ini memiliki beberapa tujuan utama, di antaranya adalah untuk menghindari bias dan meningkatkan kinerja model. Encoding membantu menghindari bias dengan mengubah variabel kategori menjadi bentuk yang dapat dimengerti oleh model, sehingga mencegah kesalahan interpretasi atau analisis yang tidak akurat. Selain itu, encoding juga dapat meningkatkan kinerja model dengan memungkinkan model untuk memproses informasi dengan lebih efisien. Dengan mengubah variabel kategori menjadi bentuk numerik, model dapat membuat prediksi yang lebih akurat dan cepat. Teknik encoding juga mendukung penggunaan berbagai algoritma machine learning yang memerlukan input numerik. Dengan menggunakan teknik encoding, variabel kategori dapat diubah menjadi bentuk yang sesuai dengan persyaratan algoritma, sehingga memungkinkan penggunaan algoritma tersebut dalam analisis data. Dengan demikian, teknik encoding merupakan langkah penting dalam pra-pemrosesan data yang membantu meningkatkan kualitas dan kinerja model machine learning. 
 2. Scaling
-Setelah tahap encoding, selanjutnya adalah tahap Scaling. pada tahap ini dilakukan normalisasi skala numerical value menggunakan StandardScaler(). tujuan scaling yaitu menjaga konsistensi interaksi antar variabel. Skala yang tidak seragam dapat menyebabkan masalah dalam menafsirkan koefisien regresi karena interaksi antar variabel dapat bergantung pada skala relatif dari variabel tersebut. berikut scaling dilakukan:
-    ```
-    scaler = StandardScaler()
-    scaler.fit(X[numerical_feats])
-    X[numerical_feats] = scaler.transform(X.loc[:, numerical_feats])
-    X[numerical_feats].head()
-    ```
+Setelah tahap encoding, selanjutnya adalah tahap Scaling. pada tahap ini dilakukan normalisasi skala numerical value menggunakan StandardScaler(). Teknik scaling dipilih karena pentingnya menjaga konsistensi interaksi antar variabel dalam analisis data. Dalam analisis regresi, skala yang tidak seragam antar variabel dapat menyebabkan masalah dalam menafsirkan koefisien regresi. Hal ini dikarenakan interaksi antar variabel dapat bergantung pada skala relatif dari masing-masing variabel tersebut.
+
+    Dengan menggunakan teknik scaling, variabel-variabel dalam dataset dapat dibawa ke dalam skala yang seragam, seperti standar skala atau rentang tertentu, sehingga mengurangi potensi bias dalam analisis regresi. Teknik scaling mempengaruhi kinerja model dengan memastikan bahwa variabel-variabel memiliki dampak yang seimbang dalam model. Tanpa scaling, variabel dengan skala besar mungkin akan mendominasi pengaruh dalam analisis, sementara variabel dengan skala kecil mungkin tidak mempengaruhi model dengan signifikan. Dengan menggunakan teknik scaling, variabel-variabel dapat memiliki bobot yang seimbang dalam model, sehingga menghasilkan hasil yang lebih akurat dan dapat diandalkan.
 3. Splitting Dataset
-setelah data di scaling, selanjutnya splitting dataset. Splitting dataset menjadi train dan test dengan rasio 80:20, hal ini perlu dilakukan karena penting untuk menguji kinerja model pada data yang tidak digunakan dalam proses pelatihan. berikut cara splitting dataset:
-    ```
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 20, random_state = 1)
-    ```
+setelah data di scaling, selanjutnya splitting dataset. Splitting dataset menjadi train dan test dengan rasio 80:20, Pemisahan dataset menjadi data latih dan data uji membantu menghindari overfitting, di mana model terlalu "menghafal" data latih sehingga kinerjanya menurun saat diterapkan pada data baru. Dengan validasi menggunakan data uji yang terpisah, Evaluasi kinerja model secara lebih obyektif dan mendapatkan perkiraan yang lebih realistis tentang seberapa baik model akan berperforma pada data baru.
 
 ## Modeling
-Modelling dilakukan dalam 2 tahap yaitu Find optimal model for data using TPOT, Hyperparameter Tuning untuk optimal model dan training model. TPOT merupakan AutoML yang memiliki tujuan menemukan model dengan performa tinggi terhadap dataset dan Hyperparameter tuning merupakan proses pencarian parameter dengan performa tinggi untuk model. berikut adalah penerapan tahap modelling:
+Modelling dilakukan dalam 2 tahap yaitu Find optimal model for data using TPOT, Hyperparameter Tuning untuk optimal model dan training model. berikut adalah penerapan tahap modelling:
 1. Find optimal model using TPOT
-pada tahap ini menggunakan TPOT Classifier karena sesuai dengan permasalahan yang ingin diselesaikan. berikut bagaimana menerapkan TPOT Classifier:
-    ```
-    # define model evaluation
-    cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
-    # define search
-    model = TPOTClassifier(generations=5, population_size=50, cv=cv, scoring='accuracy', verbosity=2, random_state=1, n_jobs=-1)
-    # perform the search
-    model.fit(X_train, y_train)
-    # export the best model
-    model.export('tpot_sonar_best_model.py')
-    ```
+TPOT merupakan AutoML yang memiliki tujuan menemukan model dengan performa tinggi terhadap dataset. pada tahap ini menggunakan TPOT Classifier karena sesuai dengan permasalahan yang ingin diselesaikan.
     hasilnya, KNN Classifier menjadi model yang optimal. Maka dari itu model machine learning yang digunakan adalah KNN Classifier.KNN (K-Nearest Neighbors) adalah salah satu algoritma machine learning yang digunakan untuk masalah klasifikasi dan regresi. Algoritma ini bekerja dengan cara menentukan label atau nilai target dari suatu data baru berdasarkan mayoritas label atau nilai target dari k data terdekat di sekitarnya, di mana k merupakan jumlah tetangga terdekat yang dipilih (biasanya merupakan bilangan ganjil untuk menghindari kebingungan jika terdapat kategori yang sama jumlahnya).
 2. Hyperparameter Tuning
-setelah mendapatkan model yang optimal, selanjutnya hyperparameter tuning. KNN Classifier akan di tuning dengan parameter berikut:
+setelah mendapatkan model yang optimal, selanjutnya hyperparameter tuning. Hyperparameter tuning merupakan proses pencarian parameter dengan performa tinggi untuk model. Hyperparameter tuning perlu dilakukan untuk mengoptimalkan kinerja model machine learning. Hyperparameter adalah parameter yang nilainya tidak ditentukan oleh model itu sendiri, melainkan harus diatur sebelum proses pelatihan model dimulai. Contohnya adalah nilai alpha dalam regularisasi Lasso dan Ridge, jumlah pohon dalam algoritma Random Forest, atau learning rate dalam algoritma gradient boosting.
+
+    Hyperparameter tuning dilakukan untuk mencari kombinasi nilai hyperparameter yang menghasilkan model dengan performa terbaik. Dengan melakukan tuning, kita dapat meningkatkan akurasi, generalisasi, dan kestabilan model. Tanpa tuning, model mungkin tidak akan mencapai performa optimalnya, dan bisa jadi akan overfitting atau underfitting pada data pelatihan. Metode hyperparameter tuning yang digunakan adalah GridSearchCV. GridSearchCV adalah sebuah metode yang sangat berguna dalam pengembangan model machine learning karena memungkinkan untuk mencari kombinasi hyperparameter yang optimal dengan cara yang efisien dan sistematis. Dalam praktiknya, GridSearchCV bekerja dengan mengevaluasi setiap kombinasi hyperparameter yang mungkin dari sebuah grid yang telah ditentukan sebelumnya. Setiap kombinasi dievaluasi menggunakan teknik validasi silang untuk menghindari overfitting dan underfitting.
+    
+    Penggunaan GridSearchCV sangat disarankan karena memungkinkan untuk menghemat waktu dan upaya yang diperlukan dalam mencari kombinasi hyperparameter yang optimal secara manual. Selain itu, GridSearchCV juga membantu dalam meningkatkan performa model dengan memilih kombinasi hyperparameter yang memberikan performa terbaik berdasarkan metrik evaluasi yang telah ditentukan. Dengan demikian, GridSearchCV merupakan salah satu alat yang sangat berguna dalam proses tuning hyperparameter untuk menghasilkan model machine learning yang lebih baik dan lebih akurat.KNN Classifier akan di tuning dengan parameter berikut:
     ```
     leaf_size = list(range(1,50))
     n_neighbors = list(range(1,30))
     p=[1,2]
     weights = ['uniform','distance']
     metric = ['minkowski','euclidean','manhattan']
-    ```
-    lalu, berikut bagaimana cara dilakukannya hyperparameter tuning:
-    ```
-    #Create new KNN object
-    knn_2 = KNeighborsClassifier()
-    #Use GridSearch
-    clf = GridSearchCV(knn_2, grid_params, cv=cv, verbose=2)
-    #Fit the model
-    best_model = clf.fit(X_train,y_train)
     ```
     Hasilnya, parameter yang optimal terhadap model adalah sebagai berikut
     ```
@@ -182,14 +155,11 @@ setelah mendapatkan model yang optimal, selanjutnya hyperparameter tuning. KNN C
     }
     ```
 3. Training Model
-setelah hyperparameter tuning, selanjutnya training model. model dengan parameter optimal dilakukan training dengan data training. berikut bagaimana training model dilakukan:
-    ```
-    best_model = clf.fit(X_train,y_train)
-    ```
+setelah hyperparameter tuning, selanjutnya training model. model dengan parameter optimal dilakukan training dengan data training.
 ## Evaluation
 setelah modeeling dilakukan, selanjutnya adalah evaluation model. pada tahap ini dilakukan evaluasi pada kinerja model menggunakan accuracy, precision, recall dan F1 score.berikut penjelasan dari masing-masing metriks:
 1. Accuracy
-Akurasi adalah metrik evaluasi yang mengukur seberapa baik model membuat prediksi yang benar dari total prediksi yang dilakukan. Dalam konteks klasifikasi, akurasi memberikan gambaran mengenai seberapa sering model memprediksi kelas yang benar, baik itu kelas positif maupun negatif. berikut formula dari accuracy:
+Akurasi adalah metrik evaluasi yang mengukur seberapa baik model membuat prediksi yang benar dari total prediksi yang dilakukan. Dalam konteks klasifikasi, akurasi memberikan gambaran mengenai seberapa sering model memprediksi kelas yang benar, baik itu kelas positif maupun negatif. Sebagai panduan umum, tingkat akurasi di atas 90% sering dianggap sebagai tingkat yang baik, hal tersebut berarti model mampu melakukan prediksi dengan tingkat keberhasilan yang tinggi dalam mengklasifikasikan data ke dalam kelas yang benar.. berikut formula dari accuracy:
 $$Accuracy = {TP+TN \over TP+TN+FP+FN}$$
 Keterangan:
 TP = True Positif
@@ -197,19 +167,19 @@ TN = True Negatif
 FP = False Positif
 FN = False Negatif
 2. Precision
-Presisi adalah metrik evaluasi yang mengukur seberapa baik model membuat prediksi yang benar untuk kelas positif dari total prediksi positif yang dilakukan. Dalam konteks klasifikasi, presisi memberikan gambaran mengenai seberapa sering model memprediksi kelas positif dengan benar, di antara semua prediksi positif yang dibuat oleh model. berikut adalah folume precision: 
+Presisi adalah metrik evaluasi yang mengukur seberapa baik model membuat prediksi yang benar untuk kelas positif dari total prediksi positif yang dilakukan. Dalam konteks klasifikasi, presisi memberikan gambaran mengenai seberapa sering model memprediksi kelas positif dengan benar, di antara semua prediksi positif yang dibuat oleh model. Tingkat precision yang tinggi menunjukkan bahwa model cenderung tidak melakukan banyak kesalahan dalam mengklasifikasikan data negatif sebagai positif (false positive). Dalam beberapa kasus, tingkat precision yang tinggi dapat dianggap sebagai indikasi kinerja model yang baik, terutama jika kesalahan prediksi positif lebih berdampak daripada kesalahan prediksi negatif. berikut adalah formula precision: 
 $$Precision = {TP \over TP + FP}$$
 Keterangan:
 TP = True Positif
 FP = False Positif
 3. Recall
-Recall adalah metrik evaluasi yang menggambarkan seberapa baik suatu model dalam mengidentifikasi kelas positif dengan benar. berikut merupakan formula dari recall:
+Recall adalah metrik evaluasi yang menggambarkan seberapa baik suatu model dalam mengidentifikasi kelas positif dengan benar. Dalam konteks klasifikasi, recall memberikan gambaran tentang seberapa baik model dalam menemukan semua kasus positif yang ada. Tingkat recall yang tinggi menunjukkan bahwa model cenderung tidak melewatkan banyak kasus positif yang sebenarnya (false negative). Dalam beberapa kasus, tingkat recall yang tinggi lebih diutamakan daripada tingkat precision yang tinggi, terutama jika kesalahan mengidentifikasi kasus positif lebih berdampak daripada kesalahan mengidentifikasi kasus negatif. berikut merupakan formula dari recall:
 $$Recall = {TP \over TP + FN}$$
 Keterangan:
 TP = True Positif
 FN = False Negatif
 4. F1 Score
-F1 Score merupakan metrik evaluasi yang mencerminkan keseimbangan antara Presisi (Precision) dan Sensitivitas (Recall). 
+F1 Score merupakan metrik evaluasi yang mencerminkan keseimbangan antara Presisi (Precision) dan Sensitivitas (Recall). F1-score memberikan gambaran yang lebih komprehensif tentang kinerja model dalam mengklasifikasikan data, karena menggabungkan kedua aspek ini menjadi satu metrik tunggal. F1-score berguna terutama dalam kasus di mana kita perlu menemukan keseimbangan antara presisi dan recall. Misalnya, jika kita memiliki dataset yang tidak seimbang (imbalance classes), di mana salah satu kelas memiliki jumlah sampel yang jauh lebih sedikit dari kelas lainnya, maka F1-score dapat memberikan gambaran yang lebih baik tentang kinerja model daripada akurasi. F1-score dianggap baik jika nilainya mendekati 1, yang menunjukkan presisi dan recall yang tinggi. Namun, seperti metrik evaluasi lainnya, penilaian tentang seberapa tinggi F1-score yang dianggap "baik" juga tergantung pada konteks masalah yang sedang dihadapi. Evaluasi yang komprehensif dengan mempertimbangkan akurasi, presisi, recall, dan F1-score adalah penting untuk memahami kinerja model secara menyeluruh. 
 $$F1 Score = {TP \times TN  \over TP + TN}$$
 Keterangan:
 TP = Recall
